@@ -5,19 +5,32 @@ admin.site.site_title  = "Ecommerce TOOL"
 admin.site.index_title = "Ecommerce"
 
 
-from rest_framework.routers import DefaultRouter
-from .views import *
+# from rest_framework.routers import DefaultRouter
+# from .views import *
 
-# Create a router and register the UserViewSet
-router = DefaultRouter()
-router.register(r'users', UserViewSet, basename='user')
+# # Create a router and register the UserViewSet
+# router = DefaultRouter()
+# router.register(r'users', UserViewSet, basename='user')
 
 # Wire up the API using automatic URL routing.
+
+
+
+from django.urls import path
+from .views import (
+    UserRegistrationView,
+    LoginView,
+    UserProfileView,
+    ChangePasswordView,
+    SendPasswordResetEmailView,
+    UserPasswordResetView
+)
+
 urlpatterns = [
-    path('', include(router.urls)),
-    path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),  # Login for JWT tokens
-    path('token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),  # Refresh token
+    path('register/', UserRegistrationView.as_view(), name='register'),
+    path('User_Login/',LoginView.as_view(), name='login'),
+    path('profile/', UserProfileView.as_view(), name='profile'),
+    path('change-password/', ChangePasswordView.as_view(), name='change-password'),
+    path('send-reset-password-email/', SendPasswordResetEmailView.as_view(), name='send-reset-password-email'),
+    path('reset-password/<uid>/<token>/', UserPasswordResetView.as_view(), name='reset-password'),
 ]
-
-
-

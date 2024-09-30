@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    'corsheaders',
+    
     'core_app',
     'product_app',
     'order_app',
@@ -52,11 +54,6 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
 
 ]
-JAZZMIN_SETTINGS = {
-    "site_header": "Ecommerce Admin Dashboard",
-    "site_brand" : "Ecommerce",
-    "copyright"  : "Ecommerce",
-}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -65,8 +62,17 @@ REST_FRAMEWORK = {
 }
 
 
+JAZZMIN_SETTINGS = {
+    "site_header": "Ecommerce Admin Dashboard",
+    "site_brand" : "Ecommerce",
+    "copyright"  : "Ecommerce",
+}
+
+
+
+
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME'   : timedelta(minutes=5),
+    'ACCESS_TOKEN_LIFETIME'   : timedelta(minutes=50),
     'REFRESH_TOKEN_LIFETIME'  : timedelta(days=1),
     'ROTATE_REFRESH_TOKENS'   : False,
     'BLACKLIST_AFTER_ROTATION': True,
@@ -85,6 +91,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -163,3 +170,25 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+EMAIL_BACKEND   = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST      = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sunilkunkekar1@gmail.com'
+EMAIL_HOST_PASSWORD = 'krbnkwattsmkkddh' 
+EMAIL_PORT      = 465
+EMAIL_USE_SSL   = True
+EMAIL_USE_TLS   = False
+
+DEFAULT_FROM_EMAIL = '<sunilkunkekar1@gmail.com>'
+
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED        = True
+
+
+# CORS Configuration (Customize as needed)
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",  # Replace with your frontend URL
+    # "https://yourfrontenddomain.com",
+]
